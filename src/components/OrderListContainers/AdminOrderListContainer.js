@@ -6,6 +6,8 @@ import OrderList from '../OrderList/OrderList';
 import ProductSelector from '../ProductSelector/ProductSelector';
 import OrderService from '../../services/OrderService';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createSetProductTypesAction } from '../../actions/productTypes';
 
 class AdminOrderListContainer extends React.Component<AdminOrderListProps, AdminOrderListState> {
   orders = [];
@@ -30,7 +32,7 @@ class AdminOrderListContainer extends React.Component<AdminOrderListProps, Admin
   getProductTypes = () => {
     OrderService
       .getProductTypes()
-      .then((productTypes) => this.productTypes = productTypes)
+      .then((productTypes) => this.props.setProductTypes(productTypes))
       .catch((error) => console.log(error));
   }
  
@@ -60,7 +62,6 @@ class AdminOrderListContainer extends React.Component<AdminOrderListProps, Admin
     return (
       <div>
         <ProductSelector
-          products={this.productTypes}
           activeProductType={this.state.selectedProductType}
           onActiveChanged={this.updateFilteredOrders} />
         <OrderList
@@ -79,4 +80,7 @@ AdminOrderListContainer.propTypes = {
   onOrderResolved: PropTypes.func.isRequired
 };
 
-export default AdminOrderListContainer;
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  ({ setProductTypes: (productTypes) => dispatch(createSetProductTypesAction(productTypes)) });
+
+export default connect(null, mapDispatchToProps)(AdminOrderListContainer);

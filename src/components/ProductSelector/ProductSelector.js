@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { connect } from 'react-redux';
 import type { ProductType } from '../../types/OrderTypes';
 import type { ProductSelectorProps } from '../../types/ProductSelectorTypes';
 import PropTypes from 'prop-types';
@@ -39,4 +40,8 @@ ProductSelector.propTypes = {
   onActiveChanged: PropTypes.func.isRequired
 };
 
-export default ProductSelector;
+const mapStateToProps = (state) => ({
+  products: state.productTypeState.productTypes
+});
+
+export default connect(mapStateToProps)(ProductSelector);

@@ -6,6 +6,8 @@ import OrderList from '../OrderList/OrderList';
 import AddOrder from '../OrderList/AddOrder';
 import OrderService from '../../services/OrderService';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createSetProductTypesAction } from '../../actions/productTypes';
 
 class OrderListContainer extends React.Component<OrderListContainerProps, OrderListContainerState> {
   orders: Array<DisplayOrder> = [];
@@ -34,7 +36,7 @@ class OrderListContainer extends React.Component<OrderListContainerProps, OrderL
 
   getProductTypes = () => {
     OrderService.getProductTypes()
-      .then((productTypes) => this.setState({ productTypes }))
+      .then((productTypes) => this.props.setProductTypes(productTypes))
       .catch((error) => { console.log(error); });
   }
 
@@ -71,7 +73,6 @@ class OrderListContainer extends React.Component<OrderListContainerProps, OrderL
         <OrderList columns={this.props.columns} displayOrders={this.state.filteredOrders} />
         <AddOrder
           onAddOrder={this.onAddOrder}
-          productTypes={this.state.productTypes}
           activeProductTypeChanged={this.updateFilteredOrders}
         />
       </div>
@@ -83,4 +84,7 @@ OrderListContainer.propTypes = {
   columns: PropTypes.array.isRequired
 };
 
-export default OrderListContainer;
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  ({ setProductTypes: (productTypes) => dispatch(createSetProductTypesAction(productTypes)) });
+
+export default connect(null, mapDispatchToProps)(OrderListContainer);

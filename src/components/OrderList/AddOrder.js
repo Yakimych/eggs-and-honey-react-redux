@@ -33,7 +33,6 @@ class AddOrder extends React.Component<AddOrderProps, AddOrderState> {
             Add
         </button>
         <ProductSelector
-          products={this.props.productTypes}
           activeProductType={this.state.productType}
           onActiveChanged={this.activeProductTypeChanged} />
       </div>
@@ -42,7 +41,6 @@ class AddOrder extends React.Component<AddOrderProps, AddOrderState> {
 }
 
 AddOrder.propTypes = {
-  productTypes: PropTypes.array.isRequired,
   onAddOrder: PropTypes.func.isRequired,
   activeProductTypeChanged: PropTypes.func.isRequired
 };
