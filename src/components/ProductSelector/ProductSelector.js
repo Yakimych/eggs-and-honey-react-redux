@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import type { ProductType } from '../../types/OrderTypes';
 import type { ProductSelectorProps } from '../../types/ProductSelectorTypes';
+import type { GlobalState } from '../../types/GlobalState';
 import PropTypes from 'prop-types';
 
 class ProductSelector extends React.Component<ProductSelectorProps> {
@@ -40,8 +41,7 @@ ProductSelector.propTypes = {
   onActiveChanged: PropTypes.func.isRequired
 };
 
-// TODO: Is it possible to type the state parameter?
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: GlobalState) => ({
   products: state.productTypeState.productTypes
 });
 
