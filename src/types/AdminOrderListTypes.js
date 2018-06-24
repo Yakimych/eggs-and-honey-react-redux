@@ -6,7 +6,7 @@ type AdminOrderListProps = {
   columns: Array<OrderListColumn>,
   orders: Array<Order>,
   onOrderResolved: (order: Order) => void,
-  setProductTypes: (productTypes: any) => void
+  setProductTypes: (productTypes: Array<ProductType>) => void
 }
 
 type AdminOrderListState = {

@@ -1,13 +1,22 @@
 // @flow
-import type { Reducer } from 'redux';
+import type { ProductType } from '../types/orderTypes';
 import { SET_PRODUCT_TYPES } from '../actions/productTypes';
+import type { SetProductTypesAction } from '../actions/productTypes';
 
-const initialState: Object = { productTypes: [], selectedProductType: null };
+type State = {
+  +productTypes: Array<ProductType>,
+  +selectedProduct: ?ProductType
+}
 
-const productTypes: Reducer<any, any> = (state = initialState, action) => {
+type Action =
+  | SetProductTypesAction;
+
+const initialState: State = { productTypes: [], selectedProduct: null };
+
+const productTypes = (state: State = initialState, action: Action): State => {
   switch (action.type) {
     case SET_PRODUCT_TYPES:
-      return Object.assign({}, state, { productTypes: action.payload });
+      return Object.assign({}, state, { productTypes: action.productTypes });
     default:
       return state;
   }

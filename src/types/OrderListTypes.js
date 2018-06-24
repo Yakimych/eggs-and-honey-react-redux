@@ -1,5 +1,6 @@
 // @flow
 import type { DisplayOrder } from './OrderTypes';
+
 type OrderListColumn = {
   name: string,
   label: string

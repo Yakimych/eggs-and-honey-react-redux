@@ -40,6 +40,7 @@ ProductSelector.propTypes = {
   onActiveChanged: PropTypes.func.isRequired
 };
 
+// TODO: Is it possible to type the state parameter?
 const mapStateToProps = (state) => ({
   products: state.productTypeState.productTypes
 });

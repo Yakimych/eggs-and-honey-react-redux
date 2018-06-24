@@ -11,7 +11,6 @@ import { createSetProductTypesAction } from '../../actions/productTypes';
 
 class AdminOrderListContainer extends React.Component<AdminOrderListProps, AdminOrderListState> {
   orders = [];
-  productTypes = [];
 
   constructor(props: AdminOrderListProps) {
     super(props);

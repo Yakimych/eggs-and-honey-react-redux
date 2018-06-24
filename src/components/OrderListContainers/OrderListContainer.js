@@ -15,8 +15,7 @@ class OrderListContainer extends React.Component<OrderListContainerProps, OrderL
   constructor(props: OrderListContainerProps) {
     super(props);
     this.state = {
-      filteredOrders: [],
-      productTypes: []
+      filteredOrders: []
     };
   }
 
