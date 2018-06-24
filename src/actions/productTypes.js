@@ -9,4 +9,4 @@ export type SetProductTypesAction = {
 };
 
 export const createSetProductTypesAction = (productTypes: Array<ProductType>): SetProductTypesAction => 
-  ({ type: SET_PRODUCT_TYPES, productTypes: productTypes });
+  ({ type: SET_PRODUCT_TYPES, productTypes });

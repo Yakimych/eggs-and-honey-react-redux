@@ -2,6 +2,7 @@
 import type { ProductTypesState } from '../types/GlobalState';
 import { SET_PRODUCT_TYPES } from '../actions/productTypes';
 import type { SetProductTypesAction } from '../actions/productTypes';
+import type { GlobalState } from '../types/GlobalState';
 
 type Action =
   | SetProductTypesAction;
@@ -16,5 +17,7 @@ const productTypes = (state: ProductTypesState = initialState, action: Action): 
       return state;
   }
 };
+
+export const getProductTypes = (state: GlobalState) => state.productTypeState.productTypes;
 
 export default productTypes;
