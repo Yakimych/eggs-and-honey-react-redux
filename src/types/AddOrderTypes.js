@@ -3,12 +3,11 @@ import type { ProductType } from './OrderTypes.js';
 
 type AddOrderProps = {
   onAddOrder: (name: string, product: ProductType) => void,
-  activeProductTypeChanged: (name: ?ProductType) => void
+  selectedProductType: ?ProductType
 }
 
 type AddOrderState = {
-  name: string,
-  productType: ?ProductType
+  name: string
 }
 
 export type { AddOrderProps, AddOrderState };

@@ -7,7 +7,6 @@ import ProductSelector from '../ProductSelector/ProductSelector';
 import OrderService from '../../services/OrderService';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createFetchProductTypesSuccessAction } from '../../actions/productTypes';
 import type { GlobalState } from '../../types/GlobalState';
 import { getSelectedProduct } from '../../reducers/productTypes';
 import { getFilteredOrders } from '../../reducers/orders';
@@ -51,9 +50,4 @@ const mapStateToProps = (state: GlobalState) =>
     filteredOrders: getFilteredOrders(state),
   });
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  ({
-    setProductTypes: (productTypes) => dispatch(createFetchProductTypesSuccessAction(productTypes))
-  });
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdminOrderListContainer);
+export default connect(mapStateToProps)(AdminOrderListContainer);
