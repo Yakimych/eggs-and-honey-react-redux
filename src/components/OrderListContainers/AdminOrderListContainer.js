@@ -1,50 +1,18 @@
 // @flow
-import type { ProductType, Order, DisplayOrder } from '../../types/OrderTypes';
-import type { AdminOrderListProps, AdminOrderListState } from '../../types/AdminOrderListTypes';
+import type { Order, DisplayOrder } from '../../types/OrderTypes';
+import type { AdminOrderListProps } from '../../types/AdminOrderListTypes';
 import React from 'react';
 import OrderList from '../OrderList/OrderList';
 import ProductSelector from '../ProductSelector/ProductSelector';
 import OrderService from '../../services/OrderService';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSetProductTypesAction } from '../../actions/productTypes';
+import { createFetchProductTypesSuccessAction } from '../../actions/productTypes';
+import type { GlobalState } from '../../types/GlobalState';
+import { getSelectedProduct } from '../../reducers/productTypes';
+import { getFilteredOrders } from '../../reducers/orders';
 
-class AdminOrderListContainer extends React.Component<AdminOrderListProps, AdminOrderListState> {
-  orders = [];
-
-  constructor(props: AdminOrderListProps) {
-    super(props);
-    this.state = {
-      filteredOrders: [],
-      selectedProductType: null
-    };
-  }
-
-  componentDidMount = () =>
-    this.getProductTypes();
-
-  componentWillReceiveProps = (nextProps: AdminOrderListProps) => {
-    this.orders = nextProps.orders;
-    this.updateFilteredOrders(this.state.selectedProductType);
-  }
-
-  getProductTypes = () => {
-    OrderService
-      .getProductTypes()
-      .then((productTypes) => this.props.setProductTypes(productTypes))
-      .catch((error) => console.log(error));
-  }
- 
-  updateFilteredOrders = (selectedProductType: ?ProductType) => {
-    this.setState({ selectedProductType });
-
-    let filteredOrders =
-      !selectedProductType
-        ? this.orders
-        : this.orders.filter((order) => order.productType === selectedProductType);
-    this.setState({ filteredOrders });
-  }
-
+class AdminOrderListContainer extends React.Component<AdminOrderListProps> {
   resolveOrder = (orderId: number) => {
     OrderService.resolveOrder(orderId).then((order) => this.props.onOrderResolved(order));
   }
@@ -60,14 +28,12 @@ class AdminOrderListContainer extends React.Component<AdminOrderListProps, Admin
   render() {
     return (
       <div>
-        <ProductSelector
-          activeProductType={this.state.selectedProductType}
-          onActiveChanged={this.updateFilteredOrders} />
+        <ProductSelector />
         <OrderList
           action={this.resolveOrder}
           actionLabel={'Resolve'}
           columns={this.props.columns}
-          displayOrders={this.state.filteredOrders.map(this.toDisplayOrder)} />
+          displayOrders={this.props.filteredOrders.map(this.toDisplayOrder)} />
       </div>
     );
   }
@@ -79,7 +45,15 @@ AdminOrderListContainer.propTypes = {
   onOrderResolved: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  ({ setProductTypes: (productTypes) => dispatch(createSetProductTypesAction(productTypes)) });
+const mapStateToProps = (state: GlobalState) =>
+  ({
+    selectedProductType: getSelectedProduct(state),
+    filteredOrders: getFilteredOrders(state),
+  });
 
-export default connect(null, mapDispatchToProps)(AdminOrderListContainer);
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  ({
+    setProductTypes: (productTypes) => dispatch(createFetchProductTypesSuccessAction(productTypes))
+  });
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminOrderListContainer);

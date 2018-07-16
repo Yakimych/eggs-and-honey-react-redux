@@ -5,13 +5,10 @@ import type { OrderListColumn } from './OrderListTypes';
 type AdminOrderListProps = {
   columns: Array<OrderListColumn>,
   orders: Array<Order>,
+  filteredOrders: Array<Order>,
+  selectedProductType: ?ProductType,
   onOrderResolved: (order: Order) => void,
   setProductTypes: (productTypes: Array<ProductType>) => void
 }
 
-type AdminOrderListState = {
-  filteredOrders: Array<Order>,
-  selectedProductType: ?ProductType
-}
-
-export type { AdminOrderListProps, AdminOrderListState };
+export type { AdminOrderListProps };

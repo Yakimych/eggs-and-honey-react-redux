@@ -1,9 +1,12 @@
 // @flow
-import type { AdminPageState } from '../../types/AdminPageTypes';
+import type { AdminPageState, AdminPageProps } from '../../types/AdminPageTypes';
 import React from 'react';
+import { connect } from 'react-redux';
 import AdminOrderListContainer from '../OrderListContainers/AdminOrderListContainer';
 import OrderService from '../../services/OrderService';
 import OrderHistory from '../OrderListContainers/OrderHistoryContainer';
+import { fetchOrders } from '../../actions/orders';
+import { fetchProductTypes } from '../../actions/productTypes';
 import './AdminPage.css';
 
 let columns = [
@@ -15,18 +18,13 @@ let columns = [
 
 let historyColumns = columns.concat([ { name: 'dateResolved', label: 'Date Resolved' } ]);
 
-class AdminPage extends React.Component<any, AdminPageState> {
+class AdminPage extends React.Component<AdminPageProps, AdminPageState> {
   state = { orders: [], resolvedOrders: [] };
 
   componentDidMount() {
-    this.getOrders();
+    this.props.fetchOrders();
+    this.props.fetchProductTypes();
     this.getOrderHistory();
-  }
-
-  getOrders = () => {
-    OrderService.getOrders()
-      .then((orders) => this.setState({ orders: orders }))
-      .catch((error) => console.log(error));
   }
 
   getOrderHistory = () => {
@@ -36,7 +34,7 @@ class AdminPage extends React.Component<any, AdminPageState> {
   }
 
   handleOrderResolutionChanged = () => {
-    this.getOrders();
+    this.props.fetchOrders();
     this.getOrderHistory();
   }
 
@@ -57,4 +55,10 @@ class AdminPage extends React.Component<any, AdminPageState> {
   }
 }
 
-export default AdminPage;
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  ({
+    fetchOrders: () => dispatch(fetchOrders()),
+    fetchProductTypes: () => dispatch(fetchProductTypes()) // TODO: Does flow check this? Removing doesn't cause an error
+  });
+
+export default connect(null, mapDispatchToProps)(AdminPage);

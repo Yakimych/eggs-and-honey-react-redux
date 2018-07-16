@@ -1,23 +1,27 @@
 // @flow
 import type { ProductTypesState } from '../types/GlobalState';
-import { SET_PRODUCT_TYPES } from '../actions/productTypes';
-import type { SetProductTypesAction } from '../actions/productTypes';
+import { FETCH_PRODUCT_TYPES_SUCCESS, SELECT_PRODUCT_TYPE } from '../actions/productTypes';
+import type { FetchProductTypesSuccessAction, SelectProductTypeAction } from '../actions/productTypes';
 import type { GlobalState } from '../types/GlobalState';
 
 type Action =
-  | SetProductTypesAction;
+  | FetchProductTypesSuccessAction
+  | SelectProductTypeAction;
 
 const initialState: ProductTypesState = { productTypes: [], selectedProduct: null };
 
 const productTypes = (state: ProductTypesState = initialState, action: Action): ProductTypesState => {
   switch (action.type) {
-    case SET_PRODUCT_TYPES:
-      return Object.assign({}, state, { productTypes: action.productTypes });
+    case FETCH_PRODUCT_TYPES_SUCCESS:
+      return Object.assign({}, state, { productTypes: action.productTypes }); // TODO: Doesn't typecheck? asd: action.productType works
+    case SELECT_PRODUCT_TYPE:
+      return Object.assign({}, state, { selectedProduct: action.productType }); 
     default:
       return state;
   }
 };
 
 export const getProductTypes = (state: GlobalState) => state.productTypeState.productTypes;
+export const getSelectedProduct = (state: GlobalState) => state.productTypeState.selectedProduct;
 
 export default productTypes;

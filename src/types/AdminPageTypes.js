@@ -1,8 +1,13 @@
-import type { Order, ResolvedOrder } from '../../types/OrderTypes';
+import type { ResolvedOrder } from '../../types/OrderTypes';
 
+type AdminPageProps = {
+  fetchOrders: () => void,
+  fetchProductTypes: () => void
+}
+
+// TODO: Move to props
 type AdminPageState = {
-  orders: Array<Order>,
   resolvedOrders: Array<ResolvedOrder>
 }
 
-export type { AdminPageState };
+export type { AdminPageProps, AdminPageState };

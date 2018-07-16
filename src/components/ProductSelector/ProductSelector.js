@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import type { ProductType } from '../../types/OrderTypes';
 import type { ProductSelectorProps } from '../../types/ProductSelectorTypes';
 import type { GlobalState } from '../../types/GlobalState';
-import { getProductTypes } from '../../reducers/productTypes';
+import { getProductTypes, getSelectedProduct } from '../../reducers/productTypes';
+import { selectProductTypeAction } from '../../actions/productTypes';
 import PropTypes from 'prop-types';
 
 class ProductSelector extends React.Component<ProductSelectorProps> {
@@ -13,7 +14,7 @@ class ProductSelector extends React.Component<ProductSelectorProps> {
 
   productTypeClicked = (productType: ProductType) => {
     const newProductType: ?ProductType = this.props.activeProductType === productType ? null : productType;
-    this.props.onActiveChanged(newProductType);
+    this.props.selectProductType(newProductType);
   }
 
   render() {
@@ -39,9 +40,13 @@ class ProductSelector extends React.Component<ProductSelectorProps> {
 ProductSelector.propTypes = {
   products: PropTypes.array.isRequired,
   activeProductType: PropTypes.string,
-  onActiveChanged: PropTypes.func.isRequired
+  selectProductType: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state: GlobalState) => ({ products: getProductTypes(state) });
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  ({ selectProductType: (productType) => dispatch(selectProductTypeAction(productType)) });
 
-export default connect(mapStateToProps)(ProductSelector);
+const mapStateToProps = (state: GlobalState) =>
+  ({ products: getProductTypes(state), activeProductType: getSelectedProduct(state) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductSelector);

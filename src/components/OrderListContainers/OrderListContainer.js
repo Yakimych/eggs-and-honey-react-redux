@@ -7,7 +7,7 @@ import AddOrder from '../OrderList/AddOrder';
 import OrderService from '../../services/OrderService';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSetProductTypesAction } from '../../actions/productTypes';
+import { createFetchProductTypesSuccessAction } from '../../actions/productTypes';
 
 class OrderListContainer extends React.Component<OrderListContainerProps, OrderListContainerState> {
   orders: Array<DisplayOrder> = [];
@@ -84,6 +84,6 @@ OrderListContainer.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  ({ setProductTypes: (productTypes) => dispatch(createSetProductTypesAction(productTypes)) });
+  ({ setProductTypes: (productTypes) => dispatch(createFetchProductTypesSuccessAction(productTypes)) });
 
 export default connect(null, mapDispatchToProps)(OrderListContainer);
