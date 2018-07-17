@@ -27,8 +27,5 @@ export type SelectProductTypeAction = {
   productType: ?ProductType
 };
 
-export const createFetchProductTypesSuccessAction = (productTypes: Array<ProductType>): FetchProductTypesSuccessAction => 
-  ({ type: FETCH_PRODUCT_TYPES_SUCCESS, productTypes });
-
 export const selectProductTypeAction = (productType: ?ProductType): SelectProductTypeAction => 
   ({ type: SELECT_PRODUCT_TYPE, productType });

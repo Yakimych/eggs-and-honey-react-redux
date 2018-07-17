@@ -6,9 +6,9 @@ import OrderList from '../OrderList/OrderList';
 import AddOrder from '../OrderList/AddOrder';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createFetchProductTypesSuccessAction } from '../../actions/productTypes';
 import type { GlobalState } from '../../types/GlobalState';
 import { getFilteredOrders } from '../../reducers/orders';
+import { addOrder } from '../../actions/orders';
 
 class OrderListContainer extends React.Component<OrderListContainerProps> {
   onAddOrder = (name: string, productType: ProductType) => {
@@ -18,13 +18,7 @@ class OrderListContainer extends React.Component<OrderListContainerProps> {
       alert('Order already exists!');
     }
     else {
-      // TODO: Dispatch action to add order
-      // OrderService.addOrder(name, productType)
-      //   .then((addedOrderId: number) => {
-      //     this.orders = this.orders.concat({ id: addedOrderId, name: name, productType: productType }); 
-      //     this.updateFilteredOrders(productType);
-      //   })
-      //   .catch(() => alert('Failed to add order, please refresh the page and try again'));
+      this.props.addOrder(name, productType);
     }
   }
 
@@ -48,12 +42,9 @@ OrderListContainer.propTypes = {
 };
 
 const mapStateToProps = (state: GlobalState) =>
-  ({
-    // selectedProductType: getSelectedProduct(state),
-    filteredOrders: getFilteredOrders(state),
-  });
+  ({ filteredOrders: getFilteredOrders(state) });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  ({ setProductTypes: (productTypes) => dispatch(createFetchProductTypesSuccessAction(productTypes)) });
+  ({ addOrder: (name, productType) => dispatch(addOrder(name, productType)) });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderListContainer);
