@@ -1,9 +1,10 @@
 // @flow
 import { FETCH_ORDERS_SUCCESS, ADD_ORDER_SUCCESS } from '../actions/orders';
-import type { FetchOrdersSuccessAction } from '../actions/orders';
+import type { FetchOrdersSuccessAction, AddOrderSuccessAction } from '../actions/orders';
 import type { GlobalState, OrdersState } from '../types/GlobalState';
 
 type Action =
+  | AddOrderSuccessAction
   | FetchOrdersSuccessAction;
 
 const initialState: OrdersState = { orders: [] };
@@ -19,7 +20,7 @@ const orders = (state: OrdersState = initialState, action: Action): OrdersState 
           id: action.addedOrderId,
           name: action.addedOrderName,
           productType: action.addedProductType,
-          datePlaced: new Date()
+          datePlaced: new Date() // TODO: Fix
         };
       return Object.assign({}, state, { orders: [...state.orders, newOrder] });
     }

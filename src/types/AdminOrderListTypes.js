@@ -7,7 +7,8 @@ type AdminOrderListProps = {
   orders: Array<Order>,
   filteredOrders: Array<Order>,
   selectedProductType: ?ProductType,
-  onOrderResolved: (order: Order) => void
+  onOrderResolved: (order: Order) => void,
+  resolveOrder: (orderId: number) => void
 }
 
 export type { AdminOrderListProps };

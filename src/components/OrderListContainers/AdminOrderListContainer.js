@@ -4,16 +4,16 @@ import type { AdminOrderListProps } from '../../types/AdminOrderListTypes';
 import React from 'react';
 import OrderList from '../OrderList/OrderList';
 import ProductSelector from '../ProductSelector/ProductSelector';
-import OrderService from '../../services/OrderService';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import type { GlobalState } from '../../types/GlobalState';
 import { getSelectedProduct } from '../../reducers/productTypes';
 import { getFilteredOrders } from '../../reducers/orders';
+import { resolveOrder } from '../../actions/orders';
 
 class AdminOrderListContainer extends React.Component<AdminOrderListProps> {
   resolveOrder = (orderId: number) => {
-    OrderService.resolveOrder(orderId).then((order) => this.props.onOrderResolved(order));
+    this.props.resolveOrder(orderId);
   }
 
   toDisplayOrder = (order: Order): DisplayOrder =>
@@ -50,4 +50,7 @@ const mapStateToProps = (state: GlobalState) =>
     filteredOrders: getFilteredOrders(state),
   });
 
-export default connect(mapStateToProps)(AdminOrderListContainer);
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  ({ resolveOrder: (orderId) => dispatch(resolveOrder(orderId)) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminOrderListContainer);
