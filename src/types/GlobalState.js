@@ -1,5 +1,5 @@
 // @flow
-import type { ProductType, Order } from './OrderTypes';
+import type { ProductType, Order, ResolvedOrder } from './OrderTypes';
 
 type ProductTypesState = {
   +productTypes: Array<ProductType>,
@@ -7,7 +7,9 @@ type ProductTypesState = {
 }
 
 type OrdersState = {
-  orders: Array<Order>
+  orders: Array<Order>,
+  // TODO: Split into separate chunk of state?
+  resolvedOrders: Array<ResolvedOrder>
 }
 
 type GlobalState = {

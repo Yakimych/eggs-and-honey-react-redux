@@ -12,9 +12,8 @@ import { getFilteredOrders } from '../../reducers/orders';
 import { resolveOrder } from '../../actions/orders';
 
 class AdminOrderListContainer extends React.Component<AdminOrderListProps> {
-  resolveOrder = (orderId: number) => {
+  resolveOrder = (orderId: number) =>
     this.props.resolveOrder(orderId);
-  }
 
   toDisplayOrder = (order: Order): DisplayOrder =>
     ({
@@ -40,7 +39,6 @@ class AdminOrderListContainer extends React.Component<AdminOrderListProps> {
 
 AdminOrderListContainer.propTypes = {
   columns: PropTypes.array.isRequired,
-  orders: PropTypes.array.isRequired,
   onOrderResolved: PropTypes.func.isRequired
 };
 

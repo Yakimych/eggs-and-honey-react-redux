@@ -1,16 +1,14 @@
 // @flow
-import type { AdminPageState, AdminPageProps } from '../../types/AdminPageTypes';
+import type { AdminPageProps } from '../../types/AdminPageTypes';
 import React from 'react';
 import { connect } from 'react-redux';
 import AdminOrderListContainer from '../OrderListContainers/AdminOrderListContainer';
-import OrderService from '../../services/OrderService';
 import OrderHistory from '../OrderListContainers/OrderHistoryContainer';
-import { fetchOrders } from '../../actions/orders';
+import { fetchOrders, fetchOrderHistory } from '../../actions/orders';
 import { fetchProductTypes } from '../../actions/productTypes';
 import './AdminPage.css';
 
 let columns = [
-  // TODO: Make name and order hardcoded in the list?
   { name: 'name', label: 'Name' },
   { name: 'order', label: 'Order' },
   { name: 'datePlaced', label: 'Date Placed' }
@@ -18,24 +16,16 @@ let columns = [
 
 let historyColumns = columns.concat([ { name: 'dateResolved', label: 'Date Resolved' } ]);
 
-class AdminPage extends React.Component<AdminPageProps, AdminPageState> {
-  state = { orders: [], resolvedOrders: [] };
-
+class AdminPage extends React.Component<AdminPageProps> {
   componentDidMount() {
     this.props.fetchOrders();
+    this.props.fetchOrderHistory();
     this.props.fetchProductTypes();
-    this.getOrderHistory();
-  }
-
-  getOrderHistory = () => {
-    OrderService.getOrderHistory()
-      .then((resolvedOrders) => this.setState({ resolvedOrders: resolvedOrders }))
-      .catch((error) => console.log(error));
   }
 
   handleOrderResolutionChanged = () => {
     this.props.fetchOrders();
-    this.getOrderHistory();
+    this.props.fetchOrderHistory();
   }
 
   render() {
@@ -44,11 +34,9 @@ class AdminPage extends React.Component<AdminPageProps, AdminPageState> {
         <h3>Admin View</h3>
         <AdminOrderListContainer
           columns={columns}
-          orders={this.state.orders}
           onOrderResolved={this.handleOrderResolutionChanged} />
         <OrderHistory
           columns={historyColumns}
-          resolvedOrders={this.state.resolvedOrders}
           onOrderUnresolved={this.handleOrderResolutionChanged} />
       </div>
     );
@@ -58,6 +46,7 @@ class AdminPage extends React.Component<AdminPageProps, AdminPageState> {
 const mapDispatchToProps = (dispatch: Dispatch) =>
   ({
     fetchOrders: () => dispatch(fetchOrders()),
+    fetchOrderHistory: () => dispatch(fetchOrderHistory()),
     fetchProductTypes: () => dispatch(fetchProductTypes()) // TODO: Does flow check this? Removing doesn't cause an error
   });
 

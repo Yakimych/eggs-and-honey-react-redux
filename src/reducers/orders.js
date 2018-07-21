@@ -1,18 +1,21 @@
 // @flow
-import { FETCH_ORDERS_SUCCESS, ADD_ORDER_SUCCESS } from '../actions/orders';
-import type { FetchOrdersSuccessAction, AddOrderSuccessAction } from '../actions/orders';
+import { FETCH_ORDERS_SUCCESS, FETCH_ORDER_HISTORY_SUCCESS, ADD_ORDER_SUCCESS } from '../actions/orders';
+import type { FetchOrdersSuccessAction, FetchOrderHistorySuccessAction, AddOrderSuccessAction } from '../actions/orders';
 import type { GlobalState, OrdersState } from '../types/GlobalState';
 
 type Action =
   | AddOrderSuccessAction
+  | FetchOrderHistorySuccessAction
   | FetchOrdersSuccessAction;
 
-const initialState: OrdersState = { orders: [] };
+const initialState: OrdersState = { orders: [], resolvedOrders: [] };
 
 const orders = (state: OrdersState = initialState, action: Action): OrdersState => {
   switch (action.type) {
     case FETCH_ORDERS_SUCCESS:
       return Object.assign({}, state, { orders: action.orders });
+    case FETCH_ORDER_HISTORY_SUCCESS:
+      return Object.assign({}, state, { resolvedOrders: action.resolvedOrders });
     case ADD_ORDER_SUCCESS:
     {
       const newOrder =
@@ -20,7 +23,7 @@ const orders = (state: OrdersState = initialState, action: Action): OrdersState 
           id: action.addedOrderId,
           name: action.addedOrderName,
           productType: action.addedProductType,
-          datePlaced: new Date() // TODO: Fix
+          datePlaced: new Date()
         };
       return Object.assign({}, state, { orders: [...state.orders, newOrder] });
     }
@@ -28,6 +31,9 @@ const orders = (state: OrdersState = initialState, action: Action): OrdersState 
       return state;
   }
 };
+
+export const getResolvedOrders = (state: GlobalState) =>
+  state.ordersState.resolvedOrders;
 
 export const getFilteredOrders = (state: GlobalState) => {
   const filteredOrders =

@@ -11,6 +11,7 @@ import { getFilteredOrders } from '../../reducers/orders';
 import { addOrder } from '../../actions/orders';
 
 class OrderListContainer extends React.Component<OrderListContainerProps> {
+  // TODO: Move to actions?
   onAddOrder = (name: string, productType: ProductType) => {
     // TODO: Add unfiltered orders and search through them?
     let existingOrders = this.props.filteredOrders.filter((o) => o.name === name && o.productType === productType);

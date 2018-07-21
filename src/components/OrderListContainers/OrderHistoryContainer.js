@@ -3,17 +3,13 @@ import type { OrderHistoryProps } from '../../types/OrderHistoryTypes';
 import type { ResolvedOrder, DisplayOrder } from '../../types/OrderTypes';
 import React from 'react';
 import OrderList from '../OrderList/OrderList';
-import OrderService from '../../services/OrderService';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import type { GlobalState } from '../../types/GlobalState';
+import { unresolveOrder } from '../../actions/orders';
+import { getResolvedOrders } from '../../reducers/orders';
 
 class OrderHistoryContainer extends React.Component<OrderHistoryProps> {
-  unresolveOrder = (resolvedOrderId: number) => {
-    OrderService
-      .unresolveOrder(resolvedOrderId)
-      .then((order) => this.props.onOrderUnresolved(order))
-      .catch((error) => console.log(error));
-  }
-
   toDisplayOrder = (order: ResolvedOrder): DisplayOrder =>
     ({
       id: order.id,
@@ -27,7 +23,7 @@ class OrderHistoryContainer extends React.Component<OrderHistoryProps> {
     return <OrderList
       columns={this.props.columns}
       actionLabel={'Unresolve'}
-      action={this.unresolveOrder}
+      action={this.props.unresolveOrder}
       displayOrders={this.props.resolvedOrders.map(this.toDisplayOrder)} />;
   }
 }
@@ -38,4 +34,10 @@ OrderHistoryContainer.propTypes = {
   onOrderUnresolved: PropTypes.func.isRequired
 };
 
-export default OrderHistoryContainer;
+const mapStateToProps = (state: GlobalState) =>
+  ({ resolvedOrders: getResolvedOrders(state) });
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  ({ unresolveOrder: (resolvedOrderId) => dispatch(unresolveOrder(resolvedOrderId)) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderHistoryContainer);

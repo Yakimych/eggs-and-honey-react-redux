@@ -1,13 +1,9 @@
-import type { ResolvedOrder } from '../../types/OrderTypes';
+// @flow
 
 type AdminPageProps = {
   fetchOrders: () => void,
+  fetchOrderHistory: () => void,
   fetchProductTypes: () => void
 }
 
-// TODO: Move to props
-type AdminPageState = {
-  resolvedOrders: Array<ResolvedOrder>
-}
-
-export type { AdminPageProps, AdminPageState };
+export type { AdminPageProps };
