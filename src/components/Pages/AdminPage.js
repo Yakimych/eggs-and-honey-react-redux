@@ -9,13 +9,13 @@ import { fetchOrders, fetchOrderHistory } from '../../actions/orders';
 import { fetchProductTypes } from '../../actions/productTypes';
 import './AdminPage.css';
 
-let columns = [
+const columns = [
   { name: 'name', label: 'Name' },
   { name: 'order', label: 'Order' },
   { name: 'datePlaced', label: 'Date Placed' }
 ];
 
-let historyColumns = columns.concat([ { name: 'dateResolved', label: 'Date Resolved' } ]);
+const historyColumns = columns.concat([ { name: 'dateResolved', label: 'Date Resolved' } ]);
 
 class AdminPage extends React.Component<AdminPageProps> {
   componentDidMount() {

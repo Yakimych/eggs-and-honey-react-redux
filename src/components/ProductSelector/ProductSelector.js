@@ -12,7 +12,6 @@ class ProductSelector extends React.Component<ProductSelectorProps> {
   productTypeIsActive = (productType: ProductType) =>
     productType === this.props.activeProductType;
 
-  // TODO: Should this be done in the reducer?
   productTypeClicked = (productType: ProductType) => {
     const newProductType: ?ProductType = this.props.activeProductType === productType ? null : productType;
     this.props.selectProductType(newProductType);

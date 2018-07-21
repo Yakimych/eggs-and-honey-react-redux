@@ -5,12 +5,8 @@ import AdminPage from './Pages/AdminPage';
 import UserPage from './Pages/UserPage';
 import './App.css';
 
-class App extends Component<any> {
+class App extends Component<*> {
   render() {
-    let columns = [
-      { name: 'name', label: 'Name' },
-      { name: 'order', label: 'Order' }
-    ];
     return (
       <div className="App bg-light">
         <div className="App-header">
@@ -18,8 +14,8 @@ class App extends Component<any> {
         </div>
         <BrowserRouter>
           <div className="main-content container">
-            <Route path="/" exact component={(props) => (<UserPage columns={columns} {...props} />)} />
-            <Route path="/admin" component={(props) => (<AdminPage {...props} />)} />
+            <Route path="/" exact component={UserPage} />
+            <Route path="/admin" component={AdminPage} />
           </div>
         </BrowserRouter>
       </div>

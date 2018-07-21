@@ -2,7 +2,6 @@
 import type { FetchOrdersSuccessAction, FetchOrderHistorySuccessAction, AddOrderSuccessAction } from '../actions/orders';
 import type { GlobalState, OrdersState } from '../types/GlobalState';
 import { FETCH_ORDERS_SUCCESS, FETCH_ORDER_HISTORY_SUCCESS, ADD_ORDER_SUCCESS } from '../actions/orders';
-// TODO: How to break lines?
 
 type Action =
   | AddOrderSuccessAction
