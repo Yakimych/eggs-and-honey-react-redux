@@ -1,11 +1,11 @@
 // @flow
 import type { OrderHistoryProps } from '../../types/OrderHistoryTypes';
 import type { ResolvedOrder, DisplayOrder } from '../../types/OrderTypes';
+import type { GlobalState } from '../../types/GlobalState';
 import React from 'react';
-import OrderList from '../OrderList/OrderList';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import type { GlobalState } from '../../types/GlobalState';
+import OrderList from '../OrderList/OrderList';
 import { unresolveOrder } from '../../actions/orders';
 import { getResolvedOrders } from '../../reducers/orders';
 
@@ -30,8 +30,7 @@ class OrderHistoryContainer extends React.Component<OrderHistoryProps> {
 
 OrderHistoryContainer.propTypes = {
   columns: PropTypes.array.isRequired,
-  resolvedOrders: PropTypes.array.isRequired,
-  onOrderUnresolved: PropTypes.func.isRequired
+  resolvedOrders: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state: GlobalState) =>

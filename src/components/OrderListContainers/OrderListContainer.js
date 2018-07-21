@@ -1,12 +1,12 @@
 // @flow
 import type { Order, DisplayOrder, ProductType } from '../../types/OrderTypes';
 import type { OrderListContainerProps } from '../../types/OrderListContainerTypes';
+import type { GlobalState } from '../../types/GlobalState';
 import React from 'react';
-import OrderList from '../OrderList/OrderList';
-import AddOrder from '../OrderList/AddOrder';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import type { GlobalState } from '../../types/GlobalState';
+import OrderList from '../OrderList/OrderList';
+import AddOrder from '../OrderList/AddOrder';
 import { getFilteredOrders } from '../../reducers/orders';
 import { addOrder } from '../../actions/orders';
 
@@ -39,7 +39,9 @@ class OrderListContainer extends React.Component<OrderListContainerProps> {
 }
 
 OrderListContainer.propTypes = {
-  columns: PropTypes.array.isRequired
+  columns: PropTypes.array.isRequired,
+  filteredOrders: PropTypes.array.isRequired,
+  addOrder: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state: GlobalState) =>

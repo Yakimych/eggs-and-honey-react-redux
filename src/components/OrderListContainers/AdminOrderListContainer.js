@@ -1,15 +1,15 @@
 // @flow
 import type { Order, DisplayOrder } from '../../types/OrderTypes';
 import type { AdminOrderListProps } from '../../types/AdminOrderListTypes';
+import type { GlobalState } from '../../types/GlobalState';
 import React from 'react';
-import OrderList from '../OrderList/OrderList';
-import ProductSelector from '../ProductSelector/ProductSelector';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import type { GlobalState } from '../../types/GlobalState';
 import { getSelectedProduct } from '../../reducers/productTypes';
 import { getFilteredOrders } from '../../reducers/orders';
 import { resolveOrder } from '../../actions/orders';
+import OrderList from '../OrderList/OrderList';
+import ProductSelector from '../ProductSelector/ProductSelector';
 
 class AdminOrderListContainer extends React.Component<AdminOrderListProps> {
   resolveOrder = (orderId: number) =>
@@ -39,7 +39,8 @@ class AdminOrderListContainer extends React.Component<AdminOrderListProps> {
 
 AdminOrderListContainer.propTypes = {
   columns: PropTypes.array.isRequired,
-  onOrderResolved: PropTypes.func.isRequired
+  filteredOrders: PropTypes.array.isRequired,
+  resolveOrder: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state: GlobalState) =>

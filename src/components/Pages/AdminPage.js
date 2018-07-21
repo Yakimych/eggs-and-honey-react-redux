@@ -1,6 +1,7 @@
 // @flow
 import type { AdminPageProps } from '../../types/AdminPageTypes';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AdminOrderListContainer from '../OrderListContainers/AdminOrderListContainer';
 import OrderHistory from '../OrderListContainers/OrderHistoryContainer';
@@ -23,25 +24,22 @@ class AdminPage extends React.Component<AdminPageProps> {
     this.props.fetchProductTypes();
   }
 
-  handleOrderResolutionChanged = () => {
-    this.props.fetchOrders();
-    this.props.fetchOrderHistory();
-  }
-
   render() {
     return (
       <div className="my-3 p-3 bg-white rounded box-shadow admin-page-container">
         <h3>Admin View</h3>
-        <AdminOrderListContainer
-          columns={columns}
-          onOrderResolved={this.handleOrderResolutionChanged} />
-        <OrderHistory
-          columns={historyColumns}
-          onOrderUnresolved={this.handleOrderResolutionChanged} />
+        <AdminOrderListContainer columns={columns} />
+        <OrderHistory columns={historyColumns} />
       </div>
     );
   }
 }
+
+AdminPage.propTypes = {
+  fetchOrders: PropTypes.func.isRequired,
+  fetchOrderHistory: PropTypes.func.isRequired,
+  fetchProductTypes: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   ({

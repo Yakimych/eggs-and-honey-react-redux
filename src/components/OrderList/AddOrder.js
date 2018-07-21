@@ -1,20 +1,20 @@
 // @flow
 import type { AddOrderProps, AddOrderState } from '../../types/AddOrderTypes';
-import React from 'react';
-import ProductSelector from '../ProductSelector/ProductSelector';
-import PropTypes from 'prop-types';
 import type { GlobalState } from '../../types/GlobalState';
+import ProductSelector from '../ProductSelector/ProductSelector';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getSelectedProduct } from '../../reducers/productTypes';
 
 class AddOrder extends React.Component<AddOrderProps, AddOrderState> {
   constructor(props: AddOrderProps) {
     super(props);
-    // TODO: Move name to the GlobalState?
     this.state = { name: '' };
   }
 
-  nameChanged = (event: SyntheticInputEvent<EventTarget>) => this.setState({ name: event.target.value });
+  nameChanged = (event: SyntheticInputEvent<EventTarget>) =>
+    this.setState({ name: event.target.value });
 
   canAddOrder = () => !!this.state.name && !!this.props.selectedProductType;
  
@@ -41,8 +41,6 @@ AddOrder.propTypes = {
 };
 
 const mapStateToProps = (state: GlobalState) =>
-  ({
-    selectedProductType: getSelectedProduct(state)
-  });
+  ({ selectedProductType: getSelectedProduct(state) });
 
 export default connect(mapStateToProps)(AddOrder);

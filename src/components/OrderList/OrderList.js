@@ -2,8 +2,8 @@
 import type { DisplayOrder } from '../../types/OrderTypes';
 import type { OrderListProps, OrderListColumn } from '../../types/OrderListTypes';
 import React from 'react';
-import OrderRow from './OrderRow';
 import PropTypes from 'prop-types';
+import OrderRow from './OrderRow';
 
 const OrderList = (props: OrderListProps) => {
   return (

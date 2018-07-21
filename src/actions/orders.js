@@ -14,6 +14,7 @@ export const ADD_ORDER = 'ADD_ORDER';
 export const ADD_ORDER_SUCCESS = 'ADD_ORDER_SUCCESS';
 export const ADD_ORDER_ERROR = 'ADD_ORDER_ERROR';
 
+// TODO: Break out into resolvedOrders?
 export const RESOLVE_ORDER = 'RESOLVE_ORDER';
 export const RESOLVE_ORDER_SUCCESS = 'RESOLVE_ORDER_SUCCESS';
 export const RESOLVE_ORDER_ERROR = 'RESOLVE_ORDER_ERROR';

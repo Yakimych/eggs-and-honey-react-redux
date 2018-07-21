@@ -1,8 +1,8 @@
 // @flow
 import type { ProductTypesState } from '../types/GlobalState';
-import { FETCH_PRODUCT_TYPES_SUCCESS, SELECT_PRODUCT_TYPE } from '../actions/productTypes';
 import type { FetchProductTypesSuccessAction, SelectProductTypeAction } from '../actions/productTypes';
 import type { GlobalState } from '../types/GlobalState';
+import { FETCH_PRODUCT_TYPES_SUCCESS, SELECT_PRODUCT_TYPE } from '../actions/productTypes';
 
 type Action =
   | FetchProductTypesSuccessAction

@@ -1,17 +1,18 @@
 // @flow
-import React from 'react';
-import { connect } from 'react-redux';
 import type { ProductType } from '../../types/OrderTypes';
 import type { ProductSelectorProps } from '../../types/ProductSelectorTypes';
 import type { GlobalState } from '../../types/GlobalState';
-import { getProductTypes, getSelectedProduct } from '../../reducers/productTypes';
-import { selectProductTypeAction } from '../../actions/productTypes';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { selectProductTypeAction } from '../../actions/productTypes';
+import { connect } from 'react-redux';
+import { getProductTypes, getSelectedProduct } from '../../reducers/productTypes';
 
 class ProductSelector extends React.Component<ProductSelectorProps> {
   productTypeIsActive = (productType: ProductType) =>
     productType === this.props.activeProductType;
 
+  // TODO: Should this be done in the reducer?
   productTypeClicked = (productType: ProductType) => {
     const newProductType: ?ProductType = this.props.activeProductType === productType ? null : productType;
     this.props.selectProductType(newProductType);
@@ -47,6 +48,9 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   ({ selectProductType: (productType) => dispatch(selectProductTypeAction(productType)) });
 
 const mapStateToProps = (state: GlobalState) =>
-  ({ products: getProductTypes(state), activeProductType: getSelectedProduct(state) });
+  ({
+    products: getProductTypes(state),
+    activeProductType: getSelectedProduct(state)
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductSelector);
