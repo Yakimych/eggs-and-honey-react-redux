@@ -22,14 +22,11 @@ export const UNRESOLVE_ORDER = 'UNRESOLVE_ORDER';
 export const UNRESOLVE_ORDER_SUCCESS = 'UNRESOLVE_ORDER_SUCCESS';
 export const UNRESOLVE_ORDER_ERROR = 'UNRESOLVE_ORDER_ERROR';
 
-export type ResolveOrderSuccessAction = {
-  type: typeof RESOLVE_ORDER_SUCCESS,
-  resolvedOrder: ResolvedOrder
-};
-
-export type UnresolveOrderSuccessAction = {
-  type: typeof UNRESOLVE_ORDER_SUCCESS,
-  Order: Order
+export type AddOrderSuccessAction = {
+  type: typeof ADD_ORDER_SUCCESS,
+  addedOrderName: string,
+  addedProductType: ProductType,
+  addedOrderId: number
 };
 
 export type FetchOrdersSuccessAction = {
@@ -42,18 +39,20 @@ export type FetchOrderHistorySuccessAction = {
   resolvedOrders: Array<ResolvedOrder>
 };
 
-export type AddOrderAction = {
-  type: typeof ADD_ORDER,
-  name: string,
-  productType: ProductType
-};
-
-export type AddOrderSuccessAction = {
-  type: typeof ADD_ORDER_SUCCESS,
-  addedOrderName: string,
-  addedProductType: ProductType,
-  addedOrderId: number
-};
+export const addOrder = (name: string, productType: ProductType) =>
+  (dispatch: Dispatch) => {
+    dispatch({ type: ADD_ORDER });
+    OrderService.addOrder(name, productType)
+      .then((addedOrderId: number) => {
+        dispatch({
+          type: ADD_ORDER_SUCCESS,
+          addedOrderName: name,
+          addedProductType: productType,
+          addedOrderId
+        });
+      })
+      .catch((error) => dispatch({ type: ADD_ORDER_ERROR, error }));
+  };
 
 export const resolveOrder = (orderId: number) =>
   (dispatch: Dispatch) => {
@@ -94,21 +93,6 @@ export const fetchOrderHistory = () =>
     OrderService.getOrderHistory()
       .then((resolvedOrders) => dispatch({ type: FETCH_ORDER_HISTORY_SUCCESS, resolvedOrders }))
       .catch((error) => dispatch({ type: FETCH_ORDER_HISTORY_ERROR, error }));
-  };
-
-export const addOrder = (name: string, productType: ProductType) =>
-  (dispatch: Dispatch) => {
-    dispatch({ type: ADD_ORDER });
-    OrderService.addOrder(name, productType)
-      .then((addedOrderId: number) => {
-        dispatch({
-          type: ADD_ORDER_SUCCESS,
-          addedOrderName: name,
-          addedProductType: productType,
-          addedOrderId
-        });
-      })
-      .catch((error) => dispatch({ type: ADD_ORDER_ERROR, error }));
   };
 
 export const createFetchOrdersSuccessAction = (orders: Array<Order>): FetchOrdersSuccessAction => 
