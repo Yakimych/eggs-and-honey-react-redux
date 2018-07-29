@@ -13,9 +13,9 @@ const initialState: OrdersState = { orders: [], resolvedOrders: [] };
 const orders = (state: OrdersState = initialState, action: Action): OrdersState => {
   switch (action.type) {
     case FETCH_ORDERS_SUCCESS:
-      return Object.assign({}, state, { orders: action.orders });
+      return { ...state, orders: action.orders };
     case FETCH_ORDER_HISTORY_SUCCESS:
-      return Object.assign({}, state, { resolvedOrders: action.resolvedOrders });
+      return { ...state, resolvedOrders: action.resolvedOrders };
     case ADD_ORDER_SUCCESS:
     {
       const newOrder =
@@ -25,7 +25,7 @@ const orders = (state: OrdersState = initialState, action: Action): OrdersState 
           productType: action.addedProductType,
           datePlaced: new Date()
         };
-      return Object.assign({}, state, { orders: [...state.orders, newOrder] });
+      return { ...state, orders: [...state.orders, newOrder] };
     }
     default:
       return state;

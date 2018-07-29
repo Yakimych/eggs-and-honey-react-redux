@@ -13,9 +13,9 @@ const initialState: ProductTypesState = { productTypes: [], selectedProduct: nul
 const productTypes = (state: ProductTypesState = initialState, action: Action): ProductTypesState => {
   switch (action.type) {
     case FETCH_PRODUCT_TYPES_SUCCESS:
-      return Object.assign({}, state, { productTypes: action.productTypes }); // TODO: Doesn't typecheck? asd: action.productType works
+      return { ...state, productTypes: action.productTypes };
     case SELECT_PRODUCT_TYPE:
-      return Object.assign({}, state, { selectedProduct: action.productType }); 
+      return { ...state, selectedProduct: action.productType }; 
     default:
       return state;
   }
