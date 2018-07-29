@@ -1,5 +1,6 @@
 // @flow
 import type { AdminPageProps } from '../../types/AdminPageTypes';
+import type { OrderListColumn } from '../../types/OrderListTypes';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,7 +10,7 @@ import { fetchOrders, fetchOrderHistory } from '../../actions/orders';
 import { fetchProductTypes } from '../../actions/productTypes';
 import './AdminPage.css';
 
-const columns = [
+const columns: Array<OrderListColumn> = [
   { name: 'name', label: 'Name' },
   { name: 'order', label: 'Order' },
   { name: 'datePlaced', label: 'Date Placed' }

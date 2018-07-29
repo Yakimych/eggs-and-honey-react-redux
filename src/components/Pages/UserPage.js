@@ -1,5 +1,6 @@
 // @flow
 import type { UserPageProps } from '../../types/UserPageTypes';
+import type { OrderListColumn } from '../../types/OrderListTypes';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,7 +9,7 @@ import { fetchOrders } from '../../actions/orders';
 import { fetchProductTypes } from '../../actions/productTypes';
 import './UserPage.css';
 
-const columns = [
+const columns: Array<OrderListColumn> = [
   { name: 'name', label: 'Name' },
   { name: 'order', label: 'Order' },
 ];
@@ -30,7 +31,6 @@ class UserPage extends React.Component<UserPageProps> {
 }
 
 UserPage.propTypes = {
-  columns: PropTypes.array.isRequired,
   fetchOrders: PropTypes.func.isRequired,
   fetchProductTypes: PropTypes.func.isRequired
 };
@@ -38,7 +38,10 @@ UserPage.propTypes = {
 const mapDispatchToProps = (dispatch: Dispatch) =>
   ({
     fetchOrders: () => dispatch(fetchOrders()),
-    fetchProductTypes: () => dispatch(fetchProductTypes()) // TODO: Does flow check this? Removing doesn't cause an error
+    // TODO: Does flow check this? Removing doesn't cause an error
+    // NOTE: It should work if the props in App.js are strongly typed to the
+    // ReactRouter props
+    fetchProductTypes: () => dispatch(fetchProductTypes())
   });
 
 export default connect(null, mapDispatchToProps)(UserPage);
