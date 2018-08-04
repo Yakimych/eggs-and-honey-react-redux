@@ -1,6 +1,7 @@
 // @flow
 import type { UserPageProps } from '../../types/UserPageTypes';
 import type { OrderListColumn } from '../../types/OrderListTypes';
+import type { ContextRouter } from 'react-router-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,7 +15,7 @@ const columns: Array<OrderListColumn> = [
   { name: 'order', label: 'Order' },
 ];
 
-class UserPage extends React.Component<UserPageProps> {
+class UserPage extends React.Component<UserPageProps & ContextRouter> {
   componentDidMount() {
     this.props.fetchOrders();
     this.props.fetchProductTypes();
@@ -38,9 +39,6 @@ UserPage.propTypes = {
 const mapDispatchToProps = (dispatch: Dispatch) =>
   ({
     fetchOrders: () => dispatch(fetchOrders()),
-    // TODO: Does flow check this? Removing doesn't cause an error
-    // NOTE: It should work if the props in App.js are strongly typed to the
-    // ReactRouter props
     fetchProductTypes: () => dispatch(fetchProductTypes())
   });
 

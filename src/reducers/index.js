@@ -5,8 +5,7 @@ import { combineReducers } from 'redux';
 import productTypes from './productTypes';
 import orders from './orders';
 
-// TODO: any?
-const combinedReducers: Reducer<GlobalState, any> =
+const combinedReducers: Reducer<GlobalState, *> =
   combineReducers({ productTypeState: productTypes, ordersState: orders });
 
 export default combinedReducers;

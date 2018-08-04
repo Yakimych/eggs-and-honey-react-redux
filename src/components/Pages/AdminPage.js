@@ -1,6 +1,7 @@
 // @flow
 import type { AdminPageProps } from '../../types/AdminPageTypes';
 import type { OrderListColumn } from '../../types/OrderListTypes';
+import type { ContextRouter } from 'react-router-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,7 +19,7 @@ const columns: Array<OrderListColumn> = [
 
 const historyColumns = columns.concat([ { name: 'dateResolved', label: 'Date Resolved' } ]);
 
-class AdminPage extends React.Component<AdminPageProps> {
+class AdminPage extends React.Component<AdminPageProps & ContextRouter> {
   componentDidMount() {
     this.props.fetchOrders();
     this.props.fetchOrderHistory();
@@ -46,7 +47,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   ({
     fetchOrders: () => dispatch(fetchOrders()),
     fetchOrderHistory: () => dispatch(fetchOrderHistory()),
-    fetchProductTypes: () => dispatch(fetchProductTypes()) // TODO: Does flow check this? Removing doesn't cause an error
+    fetchProductTypes: () => dispatch(fetchProductTypes())
   });
 
 export default connect(null, mapDispatchToProps)(AdminPage);

@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import type { ContextRouter } from 'react-router-dom';
 import AdminPage from './Pages/AdminPage';
 import UserPage from './Pages/UserPage';
 import './App.css';
 
-class App extends Component<*> {
+class App extends Component<void> {
   render() {
     return (
       <div className="App bg-light">
@@ -14,8 +15,8 @@ class App extends Component<*> {
         </div>
         <BrowserRouter>
           <div className="main-content container">
-            <Route path="/" exact component={UserPage} />
-            <Route path="/admin" component={AdminPage} />
+            <Route path="/" exact component={(props: ContextRouter) => (<UserPage {...props} />)} />
+            <Route path="/admin" component={(props: ContextRouter) => (<AdminPage {...props} />)} />
           </div>
         </BrowserRouter>
       </div>
